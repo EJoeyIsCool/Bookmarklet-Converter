@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Title</title>
+    <title>Script Converter</title>
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Welcome to the Website</h1>
-    <p>This is a paragraph with a % encoded character: %20.</p>
-    <a href="javascript:void(0);">A sample bookmarklet link with % encoded character: javascript:alert('Hello%20World');</a>
+    <h1>Script Converter</h1>
+    <textarea id="scriptInput" placeholder="Paste your script here..."></textarea><br>
+    <button id="convertBtn">Convert</button>
+    <h2>Converted Script:</h2>
+    <pre id="convertedScript"></pre>
 </body>
 </html>
