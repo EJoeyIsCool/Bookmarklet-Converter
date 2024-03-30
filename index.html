@@ -42,7 +42,7 @@
 <body>
     <div id="wrapper">
         <input type="text" id="inputString" placeholder="Enter encoded URL here...">
-        <button onclick="decodeAndCopy()">Decode & Copy</button>
+        <button id="decodeButton" onclick="decodeAndCopy()">Decode & Copy</button>
     </div>
 
     <script>
@@ -80,10 +80,21 @@
 
         function decodeAndCopy() {
             const inputElement = document.getElementById('inputString');
+            const buttonElement = document.getElementById('decodeButton');
             const encodedString = inputElement.value;
             const decodedString = manualDecode(encodedString);
+
+            // Update the input field and button text
+            inputElement.value = decodedString;
+            buttonElement.textContent = 'Decoded & Copied';
+
+            // Copy to clipboard
             navigator.clipboard.writeText(decodedString).then(() => {
-                console.log('Decoded string copied to clipboard');
+                // Wait for 5 seconds, then reset
+                setTimeout(() => {
+                    inputElement.value = '';
+                    buttonElement.textContent = 'Decode & Copy';
+                }, 5000);
             }).catch(err => {
                 console.error('Error copying to clipboard: ', err);
             });
