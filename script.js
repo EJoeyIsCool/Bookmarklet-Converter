@@ -1,11 +1,5 @@
-function decodeBookmarklet(bookmarklet) {
-  return decodeURIComponent(bookmarklet);
-}
-
-function convertBookmarklet() {
-  const bookmarkletInput = document.getElementById('bookmarkletInput').value;
-  const decodedBookmarklet = decodeBookmarklet(bookmarkletInput);
-  document.getElementById('decodedBookmarklet').textContent = decodedBookmarklet;
-}
-
-document.getElementById('convertBtn').addEventListener('click', convertBookmarklet);
+document.addEventListener('DOMContentLoaded', function() {
+  document.body.innerHTML = document.body.innerHTML.replace(/%([0-9A-Fa-f]{2})/g, function(match, p1) {
+    return String.fromCharCode(parseInt(p1, 16));
+  });
+});
