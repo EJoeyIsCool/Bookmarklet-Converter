@@ -41,7 +41,7 @@
 </head>
 <body>
     <div id="wrapper">
-        <input type="text" id="inputString" placeholder="Enter encoded URL here...">
+        <input type="text" id="inputString" placeholder="Enter encoded URL here:">
         <button onclick="decodeAndCopy()">Decode & Copy</button>
     </div>
 
@@ -83,7 +83,8 @@
             const encodedString = inputElement.value;
             const decodedString = manualDecode(encodedString);
             navigator.clipboard.writeText(decodedString).then(() => {
-                console.log('Decoded string copied to clipboard');
+                alert('Text has been successfully decoded and copied.');
+                inputElement.value = '';
             }).catch(err => {
                 console.error('Error copying to clipboard: ', err);
             });
