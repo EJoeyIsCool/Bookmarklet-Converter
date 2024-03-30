@@ -3,63 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Script Converter</title>
+    <title>Manual URL Decoder</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
+            background-color: #f0f0f0;
+        }
+        #wrapper {
+            background: white;
             padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        h1, h2 {
-            color: #444;
-        }
-        textarea, pre {
-            width: 100%;
+        input, button {
             padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
+            margin: 5px 0;
             border-radius: 5px;
-            box-shadow: inset 0 1px 3px #eee;
-            font-family: Consolas, Monaco, 'Andale Mono', monospace;
-            background-color: #fefefe;
+            border: 1px solid #ddd;
+            width: 100%;
+            box-sizing: border-box;
         }
         button {
-            padding: 10px 20px;
-            background-color: #005A9C;
-            color: #ffffff;
+            background-color: #4CAF50; 
+            color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
         }
         button:hover {
-            background-color: #003D73;
-        }
-        #convertedScript {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #45a049;
         }
     </style>
-    <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Script Converter</h1>
-        <textarea id="scriptInput" placeholder="Paste your script here:"></textarea>
-        <button id="convertBtn">Convert</button>
-        <h2>Converted Script:</h2>
-        <pre id="convertedScript"></pre>
-        <button id="copyBtn">Copy Text</button>
+    <div id="wrapper">
+        <input type="text" id="inputString" placeholder="Enter encoded URL here...">
+        <button onclick="decodeAndCopy()">Decode & Copy</button>
     </div>
+
+    <script>
+        const charMap = {
+            '%20': ' ', '%21': '!', '%22': '"', '%23': '#', '%24': '$',
+            '%25': '%', '%26': '&', '%27': "'", '%28': '(', '%29': ')',
+            '%2A': '*', '%2B': '+', '%2C': ',', '%2D': '-', '%2E': '.',
+            '%2F': '/', '%30': '0', '%31': '1', '%32': '2', '%33': '3',
+            '%34': '4', '%35': '5', '%36': '6', '%37': '7', '%38': '8',
+            '%39': '9', '%3A': ':', '%3B': ';', '%3C': '<', '%3D': '=',
+            '%3E': '>', '%3F': '?', '%40': '@', '%41': 'A', '%42': 'B',
+            '%43': 'C', '%44': 'D', '%45': 'E', '%46': 'F', '%47': 'G',
+            '%48': 'H', '%49': 'I', '%4A': 'J', '%4B': 'K', '%4C': 'L',
+            '%4D': 'M', '%4E': 'N', '%4F': 'O', '%50': 'P', '%51': 'Q',
+            '%52': 'R', '%53': 'S', '%54': 'T', '%55': 'U', '%56': 'V',
+            '%57': 'W', '%58': 'X', '%59': 'Y', '%5A': 'Z', '%5B': '[',
+            '%5C': '\\','%5D': ']', '%5E': '^', '%5F': '_', '%60': '`',
+            '%61': 'a', '%62': 'b', '%63': 'c', '%64': 'd', '%65': 'e',
+            '%66': 'f', '%67': 'g', '%68': 'h', '%69': 'i', '%6A': 'j',
+            '%6B': 'k', '%6C': 'l', '%6D': 'm', '%6E': 'n', '%6F': 'o',
+            '%70': 'p', '%71': 'q', '%72': 'r', '%73': 's', '%74': 't',
+            '%75': 'u', '%76': 'v', '%77': 'w', '%78': 'x', '%79': 'y',
+            '%7A': 'z', '%7B': '{', '%7C': '|', '%7D': '}', '%7E': '~',
+            '%7F': ''
+        };
+
+        function manualDecode(encodedString) {
+            let decodedString = encodedString;
+            for (const encoded in charMap) {
+                const regex = new RegExp(encoded, 'g');
+                decodedString = decodedString.replace(regex, charMap[encoded]);
+            }
+            return decodedString;
+        }
+
+        function decodeAndCopy() {
+            const inputElement = document.getElementById('inputString');
+            const encodedString = inputElement.value;
+            const decodedString = manualDecode(encodedString);
+            navigator.clipboard.writeText(decodedString).then(() => {
+                console.log('Decoded string copied to clipboard');
+            }).catch(err => {
+                console.error('Error copying to clipboard: ', err);
+            });
+        }
+    </script>
 </body>
 </html>
